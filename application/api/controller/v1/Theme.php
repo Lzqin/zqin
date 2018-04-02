@@ -3,6 +3,10 @@
 namespace app\api\controller\v1;
 
 use app\api\validate\IDCollection;
+use app\api\model\Theme as ThemeModel;
+use app\api\validate\IDMustBePostivelnt;
+use app\lib\exception\ThemeException;
+
 
 class Theme
 {
@@ -13,7 +17,27 @@ class Theme
     public function getSimpleList($ids='')
     {
         (new IDCollection())->goCheck();
-        
-        return 'success';
+
+        $ids = explode(',' , $ids);
+
+        $result = ThemeModel::with('topicImg,headImg')
+            ->select($ids);
+        if(!$result){
+            throw new ThemeException();
+        }
+        return $result;
+    }
+
+    /**
+     * @url /theme/:id
+     */
+    public function getComplexOne($id)
+    {
+        (new IDMustBePostivelnt())->goCheck();
+        $theme = ThemeModel::getThemeWithProducts($id);
+        if (!$theme){
+            throw new ThemeException();
+        }
+        return $theme;
     }
 }
