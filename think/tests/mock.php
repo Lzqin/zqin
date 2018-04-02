@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
@@ -7,11 +6,15 @@
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
+// | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
+// 测试入口文件
+$_SERVER['REQUEST_METHOD'] = 'GET';
+// 定义项目测试基础路径
+define('TEST_PATH', __DIR__ . '/');
 // 定义项目路径
 define('APP_PATH', __DIR__ . '/application/');
-
-// 加载框架引导文件
-require './thinkphp/console.php';
+// 加载框架基础文件
+require __DIR__ . '/../base.php';
+\think\Loader::addNamespace('tests', TEST_PATH);
