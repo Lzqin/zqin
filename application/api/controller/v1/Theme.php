@@ -22,7 +22,7 @@ class Theme
 
         $result = ThemeModel::with('topicImg,headImg')
             ->select($ids);
-        if(!$result){
+        if($result->isEmpty()){
             throw new ThemeException();
         }
         return $result;
@@ -31,11 +31,10 @@ class Theme
     /**
      * @url /theme/:id
      */
-    public function getComplexOne($id)
-    {
+    public function getComplexOne($id){
         (new IDMustBePostivelnt())->goCheck();
         $theme = ThemeModel::getThemeWithProducts($id);
-        if (!$theme){
+        if(!$theme){
             throw new ThemeException();
         }
         return $theme;
